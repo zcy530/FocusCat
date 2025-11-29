@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Focus Friends</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              pastel: {
+                purple: '#E0BBE4',
+                yellow: '#FFF2CC',
+                blue: '#D4E1F5',
+                green: '#D7ECD9',
+                pink: '#FFD1DC',
+                dark: '#2D2D2D',
+              }
+            },
+            fontFamily: {
+              sans: ['Comic Sans MS', 'Comic Sans', 'cursive', 'sans-serif'],
+            },
+            animation: {
+              'bounce-slow': 'bounce 3s infinite',
+              'wiggle': 'wiggle 1s ease-in-out infinite',
+              'walk': 'walk 4s ease-in-out infinite alternate',
+            },
+            keyframes: {
+              wiggle: {
+                '0%, 100%': { transform: 'rotate(-3deg)' },
+                '50%': { transform: 'rotate(3deg)' },
+              },
+              walk: {
+                '0%': { transform: 'translateX(-20px)' },
+                '100%': { transform: 'translateX(20px)' }
+              }
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+      /* Custom scrollbar to match the cute aesthetic */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #E0BBE4; 
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #bfa1c3; 
+      }
+
+      /* Noise Texture Overlay */
+      .noise-overlay {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        z-index: 9999;
+        pointer-events: none;
+        opacity: 0.12;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+      }
+
+      /* Hand-drawn style borders */
+      .sketchy-box {
+        border-radius: 2% 4% 3% 5% / 3% 5% 4% 2%;
+        border-width: 4px;
+        border-style: solid;
+        border-color: #2D2D2D;
+        box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+      }
+      
+      .sketchy-btn {
+        border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+        border-width: 3px;
+        border-style: solid;
+        border-color: #2D2D2D;
+        transition: all 0.2s ease;
+      }
+      .sketchy-btn:active {
+        transform: scale(0.95) rotate(-1deg);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0"
+  }
+}
+</script>
+</head>
+  <body class="bg-stone-50 text-stone-800 antialiased overflow-hidden">
+    <!-- SVG Filters for Effect -->
+    <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" aria-hidden="true">
+      <defs>
+        <!-- Pencil/Hand-drawn squiggle effect -->
+        <filter id="pencil">
+          <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="3" result="noise" />
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+        <!-- A softer wobble for subtle movement -->
+        <filter id="wobble">
+          <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="1" result="noise" seed="0">
+             <animate attributeName="seed" from="0" to="10" dur="2s" repeatCount="indefinite"/>
+          </feTurbulence>
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" />
+        </filter>
+      </defs>
+    </svg>
+
+    <div id="root"></div>
+  </body>
+</html>
